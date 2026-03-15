@@ -1,0 +1,38 @@
+[package]
+name = "akeyless-path"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.89.0"
+description = "Minimal Akeyless secret fetcher — the `sops -d` equivalent"
+license = "MIT"
+authors = ["Pleme Team <team@pleme.io>"]
+repository = "https://github.com/pleme-io/akeyless-path"
+homepage = "https://github.com/pleme-io/akeyless-path"
+keywords = ["akeyless", "secrets", "config"]
+categories = ["development-tools", "command-line-utilities"]
+exclude = ["module/", "target/", "result-*", "flake.nix", "flake.lock"]
+
+[[bin]]
+name = "akeyless-path"
+path = "src/main.rs"
+
+[dependencies]
+# TODO: uncomment when implementing
+# akeyless-api = { git = "https://github.com/pleme-io/akeyless-api", features = ["rustls-tls"] }
+clap = { version = "4.5", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.8"
+tokio = { version = "1.40", features = ["full"] }
+anyhow = "1.0"
+thiserror = "2.0"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
